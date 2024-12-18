@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bonk Cherry</title>
+  <title>Mallet Fun</title>
   <style>
     body {
       display: flex;
@@ -12,6 +12,7 @@
       height: 100vh;
       margin: 0;
       background-color: #f0f0f0;
+      flex-direction: column;
     }
     .container {
       position: relative;
@@ -55,9 +56,19 @@
       border-style: solid;
       border-color: white transparent transparent transparent;
     }
+    .counter {
+  font-family: Arial, sans-serif;
+  font-size: 20px;
+  margin-bottom: 20px; /* This controls the space below the counter */
+  position: absolute;
+  top: 10px; /* Adjust the distance from the top of the page */
+  left: 50%;
+  transform: translateX(-50%); /* Center align the counter horizontally */
+}
   </style>
 </head>
 <body>
+  <div class="counter">Hits: <span id="hitCounter">0</span></div>
   <div class="container">
     <img id="friendImage" class="friend-image" src="normal.jpg" alt="Friend">
     <img id="mallet" class="mallet" src="mallet.jpg" alt="Mallet">
@@ -68,24 +79,41 @@
     const mallet = document.getElementById('mallet');
     const friendImage = document.getElementById('friendImage');
     const speechBubble = document.getElementById('speechBubble');
+    const hitCounter = document.getElementById('hitCounter');
+
+    // Array of reaction images and speech bubble texts
+    const reactions = [
+      { image: 'hit.jpg', text: 'Ouch!' },
+      { image: 'hit.jpg', text: 'That hurt!' },
+      { image: 'hit.jpg', text: '@#$%! Stop it!' },
+      { image: 'hit.jpg', text: 'I’m calling the cops!' },
+      { image: 'hit.jpg', text: 'Not again!' },
+    ];
+
+    let counter = 0; // Initialize hit counter
 
     mallet.addEventListener('click', () => {
-      // Change the friend's image to reaction
-      friendImage.src = 'hit.jpg';
+      // Increment the counter
+      counter++;
+      hitCounter.textContent = counter;
+
+      // Randomly select a reaction
+      const randomReaction = reactions[Math.floor(Math.random() * reactions.length)];
+
+      // Change the friend's image and speech bubble text
+      friendImage.src = randomReaction.image;
+      speechBubble.textContent = randomReaction.text;
 
       // Display speech bubble
       speechBubble.style.display = 'block';
 
       // Animate mallet hitting down
       mallet.style.transform = 'translateY(20px)';
-      
+
       // Reset mallet position after 100ms
       setTimeout(() => {
         mallet.style.transform = 'translateY(0)';
       }, 100);
-
-      // Change speech bubble text
-      speechBubble.textContent = '@#$%! That hurt!';
 
       // Revert back to the normal image and hide speech bubble after 1 second
       setTimeout(() => {
