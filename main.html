@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bonk Cherry</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    .container {
+      position: relative;
+      width: 300px;
+      height: 400px;
+    }
+    .friend-image {
+      width: 100%;
+      height: auto;
+      transition: 0.2s ease-in-out;
+    }
+    .mallet {
+      position: absolute;
+      top: -50px;
+      left: 100px;
+      width: 100px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .speech-bubble {
+      position: absolute;
+      bottom: 120px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 10px 20px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      display: none;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+      text-align: center;
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 10px;
+      border-style: solid;
+      border-color: white transparent transparent transparent;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img id="friendImage" class="friend-image" src="normal.jpg" alt="Friend">
+    <img id="mallet" class="mallet" src="mallet.jpg" alt="Mallet">
+    <div id="speechBubble" class="speech-bubble">Ouch!</div>
+  </div>
+
+  <script>
+    const mallet = document.getElementById('mallet');
+    const friendImage = document.getElementById('friendImage');
+    const speechBubble = document.getElementById('speechBubble');
+
+    mallet.addEventListener('click', () => {
+      // Change the friend's image to reaction
+      friendImage.src = 'hit.jpg';
+
+      // Display speech bubble
+      speechBubble.style.display = 'block';
+
+      // Animate mallet hitting down
+      mallet.style.transform = 'translateY(20px)';
+      
+      // Reset mallet position after 100ms
+      setTimeout(() => {
+        mallet.style.transform = 'translateY(0)';
+      }, 100);
+
+      // Change speech bubble text
+      speechBubble.textContent = '@#$%! That hurt!';
+
+      // Revert back to the normal image and hide speech bubble after 1 second
+      setTimeout(() => {
+        friendImage.src = 'normal.jpg';
+        speechBubble.style.display = 'none';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
